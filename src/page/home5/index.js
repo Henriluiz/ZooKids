@@ -1,8 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Pressable, Image} from 'react-native';
+import { Text, View, Pressable, Image, Modal, ScrollView } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
-import { Modal } from 'react-native-web';
 import { useState, useEffect } from 'react';
 
 export default function Home5() {
@@ -21,6 +20,10 @@ export default function Home5() {
     },
   ])  
 
+  const fechar_modal = () => {
+    setPosicaoModal(false)
+  }
+
 
   const navigation = useNavigation();
   return (
@@ -31,9 +34,21 @@ export default function Home5() {
       // </Pressable> */}
       
 
-      <Modal transparent={true} visible={true}>
-        <View style={styles.modal_detalhado}>
+      <Modal transparent={true} visible={posicaoModal}>
+        <View style={styles.navbar}>
+          <Pressable onPress={fechar_modal}>
+            <Image
+              source={require('./img_t1/icone_voltar.png')}
+              style={{ width: 40, height: 40, marginLeft: 10, marginTop: 5.5}}
+            />
+            <Text>{animais[0].nome}</Text>
+          </Pressable>
+        </View>
+        <ScrollView style={styles.modal_detalhado}>
+          <View style={styles.modalView}>
           <Image source={animais[0].img} style={styles.imagem} />
+
+          </View>
           <Text style={styles.titulo}>{animais[0].nome}</Text>
           <Text style={styles.titulo2}>Curiosidade</Text>
           <Text style={styles.Text}>{animais[0].curiosidade}</Text>
@@ -43,7 +58,8 @@ export default function Home5() {
           <Text style={styles.Text}>{animais[0].reproducao}</Text>
           <Text style={styles.titulo2}>Conservação</Text>
           <Text style={styles.Text}>{animais[0].conservacao}</Text>
-        </View>
+          
+        </ScrollView>
       </Modal>
 
       <StatusBar style="auto" />
